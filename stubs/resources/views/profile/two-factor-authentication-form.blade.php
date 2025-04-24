@@ -50,12 +50,6 @@
             {{ __('Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.') }}
         </div>
 
-        <div>
-            @foreach (json_decode(decrypt(auth()->user()->two_factor_recovery_codes), true) as $code)
-                <div>{{ $code }}</div>
-            @endforeach
-        </div>
-
     @endif
 
     @if (session('status') == 'two-factor-authentication-confirmed')
@@ -64,6 +58,11 @@
             Two factor authentication confirmed and enabled successfully.
         </div>
     @endif
+    <div>
+        @foreach (json_decode(decrypt(auth()->user()->two_factor_recovery_codes), true) as $code)
+            <div>{{ $code }}</div>
+        @endforeach
+    </div>
 
     {{-- Regenerate 2FA Recovery Codes --}}
     <form method="POST" action="{{ route('two-factor.recovery-codes') }}">
@@ -75,4 +74,6 @@
     </form>
 
 @endif
+
+
 <hr>
